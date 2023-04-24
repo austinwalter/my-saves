@@ -3,7 +3,7 @@ import Header from '../components/header'
 import Card from '../components/card'
 import Button from '../components/button'
 import { ArrowPathIcon } from '@heroicons/react/20/solid'
-import { Post, ResponseData } from '../utils/types'
+import { Post, ResponseData } from '../lib/types'
 
 const fetcher = async (url: string) => {
   const res = await fetch(url)
@@ -53,7 +53,11 @@ export default function Home() {
       <div className="container mx-auto px-6 p-2 columns-1 md:columns-2 lg:columns-3 gap-2 [column-fill:_balance] box-border before:box-inherit after:box-inherit">
         {isEmpty ? <p>Yay, no issues found.</p> : null}
         {items.map((item) => (
-          <Card key={item.id} srcId={item.srcId} short={item.short} />
+          <Card
+            key={item.id}
+            srcId={item.youtubeId}
+            short={item.short}
+          />
         ))}
       </div>
       <div className="container mx-auto px-6 p-2">
