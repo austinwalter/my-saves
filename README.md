@@ -1,38 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# MySaves
+MySaves is a web application that allows visitors to submit YouTube videos, see all the submissions, and play the videos submitted by others in a beautiful UI.
 
-## Getting Started
+## UI Design
 
-First, run the development server:
+I deviated from my original mockups for the feed page because the embedded shorts just didn't look very good in the single feed layout on desktop. I switched to the masonry layout to take better advantage of the different shape of the shorts. It also has it's problems, but looks nice. [^1]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+From what I've read, by default YouTube embeds use a 16 / 9 aspect ratio. For YouTube shorts, we want to flip that aspect ratio so that the Shorts are taller than they are wide. This leads to the question on how to you make to vastly different formats look good while occupying the same space.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The color scheme I took from an off the self eBook of web design color palettes I bought a while back. The cyan clashes a little with the Youtube red color, if I was going to do it again I'd select a different color that compliments it better. 
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2F996RLvZxgslEodaWY4W9Gp%2FMySaves%3Fnode-id%3D16%253A90%26t%3DtHUb809bKJYJ5suf-1" allowfullscreen></iframe>
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+https://www.figma.com/file/996RLvZxgslEodaWY4W9Gp/MySaves?node-id=16%3A90&t=tHUb809bKJYJ5suf-1
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Front End & Layout
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+I like to reference Google's Material design principles because they're very detailed and easy to read. [^2]
 
-## Learn More
+## Database
 
-To learn more about Next.js, take a look at the following resources:
+I did decide to setup a database, so I created one using Supabase like you suggested. I didn't setup randomized ID strings or UUIDs to save time, but if we were implementing a production web app that would be the best practice from a security standpoint. [^3] I used a guide on their website to help with generating the database types for Typescript. [^4]
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## References
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[^1]: https://stackoverflow.com/questions/66914169/can-i-create-a-masonry-layout-using-tailwind-css-utility-classes
+[^2]: https://m2.material.io/design/layout/understanding-layout.html
+[^3]: https://supabase.com/blog/choosing-a-postgres-primary-key
+[^4]: https://supabase.com/docs/guides/api/rest/generating-types
