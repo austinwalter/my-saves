@@ -1,5 +1,4 @@
 import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite'
-import Header from '../components/header'
 import Card from '../components/card'
 import Button from '../components/button'
 import { ArrowPathIcon } from '@heroicons/react/20/solid'
@@ -37,9 +36,8 @@ export default function Home() {
   const isRefreshing = isValidating && data && data.length === size
 
   return (
-    <main className="bg-neutral-50 min-h-screen">
-      <Header />
-      <div className="container mx-auto px-6 pt-2">
+    <div className="container mx-auto px-6 pt-2">
+      <div>
         <Button
           className="px-4 py-2 font-medium text-white bg-primary-500 hover:bg-primary-600 flex justify-center"
           disabled={isRefreshing}
@@ -50,7 +48,7 @@ export default function Home() {
             : "refresh"}
         </Button>
       </div>
-      <div className="container mx-auto px-6 p-2 columns-1 md:columns-2 lg:columns-3 gap-2 [column-fill:_balance] box-border before:box-inherit after:box-inherit">
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-2 [column-fill:_balance] box-border before:box-inherit after:box-inherit">
         {isEmpty ? <p>Yay, no issues found.</p> : null}
         {items.map((item) => (
           <Card
@@ -60,7 +58,7 @@ export default function Home() {
           />
         ))}
       </div>
-      <div className="container mx-auto px-6 p-2">
+      <div>
         <Button
           className="w-full px-4 py-2 font-medium text-white bg-primary-500 hover:bg-primary-600 flex justify-center"
           disabled={isReachingEnd}
@@ -71,6 +69,6 @@ export default function Home() {
             : "load more"}
         </Button>
       </div>
-    </main>
+    </div>
   )
 }
