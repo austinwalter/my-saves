@@ -53,7 +53,7 @@ export default function Home() {
         {items.map((item) => (
           <Card
             key={item.id}
-            srcId={item.youtubeId}
+            srcId={item.youtube_id}
             short={item.short}
           />
         ))}

@@ -1,11 +1,11 @@
 
 export type Post = {
   id: number;
-  insertedAt: string;
+  inserted_at: string;
   short?: boolean;
-  updatedAt: string;
+  updated_at: string;
   url: string;
-  youtubeId: string;
+  youtube_id: string;
 }
 
 export type ResponseData = {

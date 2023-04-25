@@ -1,8 +1,17 @@
 import supabase from '../../lib/dbClient'
 import Error from 'next/error'
 import Sidebar from '../../components/sidebar'
+import { Post } from '../../lib/types'
 
-export default function Post({ post, error }) {
+type Props = {
+  post: Post;
+  error: {
+    status: number;
+    statusText?: string;
+  };
+};
+
+export default function Post({ post, error }: Props) {
   const { short, youtube_id } = post
   const verStyle = "max-w-[calc((100vh*9/16)-80px)]"
 
@@ -45,7 +54,9 @@ export async function getServerSideProps({ params: { id } }: Context) {
     .eq('id', id)
     .single()
 
-  if (error) return { props: { error: { status, statusText }}}
+  if (error) {
+    return { props: { error: { status, statusText } } }
+  }
 
   return {
     props: {

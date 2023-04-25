@@ -18,14 +18,7 @@ export default async function handler(
     .limit(10)
 
   const posts: Post[] = data ? data.map((entry) => (
-    <Post>{
-      id: entry.id,
-      insertedAt: entry.inserted_at,
-      updatedAt: entry.updated_at,
-      short: entry.short,
-      url: entry.url,
-      youtubeId: entry.youtube_id,
-    }
+    <Post>{...entry}
   )) : [] as Post[]
 
   const totalPages = count ? Math.ceil(count / 10) : 0;
