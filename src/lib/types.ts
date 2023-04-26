@@ -8,7 +8,9 @@ export type Post = {
   youtube_id: string;
 }
 
-export type ResponseData = {
-  content: Post[];
-  lastPage: number;
+export type PostListResponseData = {
+  posts: Post[];
+  next: number;
+  prev: number;
+  limit: number;
 }
