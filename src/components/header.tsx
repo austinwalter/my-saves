@@ -1,9 +1,11 @@
 import { PlusIcon, UserIcon } from '@heroicons/react/20/solid'
 
-export default function Header() {
+type HeaderProps = {};
+
+export default function Header(props: HeaderProps) {
   return (
     <nav>
-      <div className="shrink-0 bg-white border-b border-neutral-100 px-6 py-2 flex justify-between items-center">
+      <div  className="shrink-0 bg-white border-b border-neutral-100 h-14 px-6 py-2 flex justify-between items-center">
         <a className="font-bold text-primary-500 text-xl" href="#">
           MySaves
         </a>
@@ -37,3 +39,4 @@ export default function Header() {
     </nav>
   )
 }
+

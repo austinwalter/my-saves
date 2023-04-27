@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite'
 import Card from '../components/card'
 import Button from '../components/button'
@@ -17,7 +18,19 @@ const getKey: SWRInfiniteKeyLoader = (index, prevData) => {
   return `/api/posts?cursor=${prevData.next}`
 }
 
-export default function Home() {
+type HomeProps = {
+  openModal: (post: Post) => void;
+};
+
+export default function Home({ openModal }: HomeProps) {
+  const router = useRouter()
+  const { pathname } = router
+  
+  const loadPost = (post: Post) => {
+    openModal(post)
+    router.push(pathname, `/p/${post.id}`, { shallow: true })
+  }
+
   const {
     data: response,
     mutate,
@@ -56,6 +69,7 @@ export default function Home() {
             key={item.id}
             srcId={item.youtube_id}
             short={item.short}
+            onClick={() => loadPost(item)}
           />
         ))}
       </div>
