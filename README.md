@@ -1,6 +1,8 @@
 # MySaves
 MySaves is a web application that allows visitors to submit YouTube videos, see all the submissions, and play the videos submitted by others in a beautiful UI.
 
+https://my-saves-rho.vercel.app/
+
 ## UI Design
 
 I deviated from my original mockups for the feed page because the embedded shorts just didn't look very good in the single feed layout on desktop. I switched to the masonry layout to take better advantage of the different shape of the shorts. It also has it's problems, but looks nice. [^1]
@@ -21,14 +23,22 @@ I did decide to setup a database, so I created one using Supabase like you sugge
 
 I forgot to implement the delete functionality...
 
-# Display
+## Pagination
+I made the mistake of setting up cursoring in ascending order, and by the time I realized what I had done, I didn't have enough time to go back. So new posts show up at the very bottom instead of the top.
+
+I also ran out of time to go back and make the pagination happen automatically while you scroll.
+
+## Display
 Youtube autoplay not possible on mobile. [^5]
 
 If I were going to continue to develop this I would probably use a custom modal for displaying each post. The default headless ui has limitations, such as making it very difficult to also expose access the header and header buttons while it's open.
 
-I made the mistake of setting up cursoring in ascending order, and by the time I realized what I had done, I didn't have enough time to go back. So new posts show up at the very bottom instead of the top.
-
 I got the bottom bar to look good inside of the mobile simulation in the browser, but it's hit-or-miss depending on the phone. Something to do with how mobile browsers will "hide" their url bar to give you back more space, but then the bottom bar doesn't move down when that happens.
+
+# Submitting & Web Scraping
+The default Youtube embeds are super ugly. So I decided instead I'd do some quick web scraping from the Youtube urls and represent the cards with the youtube preview images instead.
+
+I also was able to get the rich previews working on Slack, Signal, and Twitter.
 
 ## References
 
