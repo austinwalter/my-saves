@@ -1,8 +1,11 @@
 
 export type Post = {
+  embed_url: string;
   id: number;
+  image: string;
   inserted_at: string;
-  short?: boolean;
+  short: boolean;
+  title: string;
   updated_at: string;
   url: string;
   youtube_id: string;
@@ -13,4 +16,8 @@ export type PostListResponseData = {
   next: number;
   prev: number;
   limit: number;
+}
+
+export type PostResponseData = {
+  post?: Post[];
 }

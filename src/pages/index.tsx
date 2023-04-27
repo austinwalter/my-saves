@@ -67,8 +67,7 @@ export default function Home({ openModal }: HomeProps) {
         {items.map((item) => (
           <Card
             key={item.id}
-            srcId={item.youtube_id}
-            short={item.short}
+            item={item}
             onClick={() => loadPost(item)}
           />
         ))}

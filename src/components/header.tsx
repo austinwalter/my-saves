@@ -1,6 +1,9 @@
 import { PlusIcon, UserIcon } from '@heroicons/react/20/solid'
+import { Post } from '../lib/types'
 
-type HeaderProps = {};
+type HeaderProps = {
+  openModal: () => void;
+};
 
 export default function Header(props: HeaderProps) {
   return (
@@ -27,7 +30,10 @@ export default function Header(props: HeaderProps) {
         </div>
         <div className="hidden lg:block">
           <span className="inline-flex gap-4">
-            <button className="hover:bg-neutral-50 border border-neutral-500 rounded-full px-4 py-1 text-neutral-500 tracking-wider">
+            <button
+              className="hover:bg-neutral-50 border border-neutral-500 rounded-full px-4 py-1 text-neutral-500 tracking-wider"
+              onClick={props.openModal}
+            >
               {'Add Link'}
             </button>
             <button className="hover:bg-neutral-50 border border-primary-500 rounded-full px-4 py-1 text-primary-500 tracking-wider">

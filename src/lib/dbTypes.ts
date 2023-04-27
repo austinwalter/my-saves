@@ -11,25 +11,34 @@ export interface Database {
     Tables: {
       posts: {
         Row: {
+          embed_url: string | null
           id: number
+          image: string | null
           inserted_at: string
           short: boolean | null
+          title: string | null
           updated_at: string
           url: string | null
           youtube_id: string | null
         }
         Insert: {
+          embed_url?: string | null
           id?: number
+          image?: string | null
           inserted_at?: string
           short?: boolean | null
+          title?: string | null
           updated_at?: string
           url?: string | null
           youtube_id?: string | null
         }
         Update: {
+          embed_url?: string | null
           id?: number
+          image?: string | null
           inserted_at?: string
           short?: boolean | null
+          title?: string | null
           updated_at?: string
           url?: string | null
           youtube_id?: string | null

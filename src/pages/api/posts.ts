@@ -1,38 +1,55 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import supabase from '../../lib/dbClient'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Post, PostListResponseData } from '../../lib/types'
+import getCursorFeed from '../../lib/cursor'
+import { PostResponseData, PostListResponseData } from '../../lib/types'
+import { to } from '../../lib/utils';
+import axios from 'axios'
+import * as cheerio from 'cheerio';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<PostListResponseData>
+  res: NextApiResponse<PostResponseData | PostListResponseData>
 ) {
-  const { query } = req
+  const { body, method } = req
 
-  const cursor = parseInt(query.cursor as string, 10) || 0
-  const limit = parseInt(query.limit as string, 10)   || 10
+  switch (method) {
+    case 'GET':
+      const results = await getCursorFeed(req)
+      res.status(200).json(results)
+      break
+    case 'POST':
+      if (!body || !body.url) res.status(400)
 
-  const dir = (cursor >= 0)
-  const id = dir ? cursor : -cursor
+      const [resp, err] = await to(axios.get(body.url))
 
-  const baseQuery = supabase.from('posts')
-    .select('*')
-    .order('id', { ascending: dir })
-    .limit(limit+1)
+      if (err) {
+        if (err.response) {
+          res.status(err.response.status);
+        } else if (err.request) {
+          res.status(400)
+        } else {
+          res.status(400)
+        }
+      }
 
-  const cursorQuery = dir ? baseQuery.gte('id', id) : baseQuery.lt('id', id)
-  const dbQuery = cursor == 0 ? baseQuery : cursorQuery
-  const { data: raw } = await dbQuery
+      const $ = cheerio.load(resp.data)
+      const attrs = {
+        short: !!$('link[rel="canonical"]').attr('href')?.includes('shorts'),
+        url: $('link[rel="canonical"]').attr('href'),
+        title: $('meta[property="og:title"]').attr('content'),
+        image: $('meta[property="og:image"]').attr('content'),
+        youtube_id: $('meta[itemprop="videoId"]').attr('content'),
+        embed_url: $('link[itemprop="embedUrl"]').attr('href')
+      }
 
-  const data: Post[] = raw ? raw.map(p => <Post>{...p}) : [] as Post[]
-  const dataEnd: boolean = data.length < limit+1
-  const posts: Post[] = dataEnd ? data : data.slice(0, -1)
-  const next = dir ? data[data.length-1].id : -data[posts.length-1].id
+      const { data, error, status } = await supabase.from('posts').insert(attrs).select()
 
-  res.status(200).json({
-    posts,
-    next: dataEnd ? 0 : next,
-    prev: -cursor,
-    limit,
-  })
+      if (error || status > 201) res.status(status)
+      res.status(status).json({ post: data })
+      break
+    default:
+      res.setHeader('Allow', ['GET', 'POST'])
+      res.status(405).end(`Method ${method} Not Allowed`)
+  }
 }

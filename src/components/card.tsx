@@ -1,23 +1,26 @@
-type Props = {
-  srcId: string;
-  short?: boolean;
+import { Post } from '../lib/types'
+import Image from 'next/image'
+
+type CardProps = {
+  item: Post;
   onClick?: () => void
 };
 
-export default function Card({ onClick, srcId, short = false }: Props) {
+export default function Card({ onClick, item }: CardProps) {
   return (
     <div
-      className="bg-white break-inside-avoid px-1 py-6 mb-2 rounded-lg"
+      className="bg-white break-inside-avoid px-2 py-2 mb-2 rounded-lg hover:cursor-pointer"
       onClick={onClick}
     >
-      <iframe
+      <div className="p-1 font-bold">
+        {item.title}
+      </div>
+      <Image
+        alt={item.title}
         className="w-full aspect-video p-1 rounded-lg"
-        height={short ? "512" : undefined}
-        src={`https://www.youtube.com/embed/${srcId}?controls=0`}
-        title="video"
-        frameBorder="0"
-        allow="autoplay; encrypted-media;"
-        allowFullScreen
+        height={item.short ? "512" : "288"}
+        width={item.short ? "288" : "512"}
+        src={item.image}
       />
     </div>
   )
