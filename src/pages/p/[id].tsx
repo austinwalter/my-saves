@@ -25,6 +25,7 @@ export default function Post({ post }: PostProps) {
         <meta property="og:description" content={"MySaves is a web application that allows visitors to submit YouTube videos, see all the submissions, and play the videos submitted by others in a beautiful UI."} />
         <meta property="og:image" content={post.image} />
 
+        <meta name="twitter:card" content="summary" />
         <meta name="twitter:site" content="@awalterdev" />
         <meta name="twitter:creator" content="@awalterdev" />
         <meta name="twitter:title" content={`MySaves | ${post.title}`} />
