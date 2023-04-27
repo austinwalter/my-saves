@@ -15,10 +15,14 @@ export default function Post({ post }: PostProps) {
   return (
     <>
       <Head>
-        <title>{post.title} | MySaves</title>
-        <meta itemProp="name" content={post.title} />
+        <title>{`MySaves | ${post.title}`}</title>
+        <meta itemProp="name" content={`MySaves | ${post.title}`} />
+        <meta itemProp="og:title" content={`MySaves | ${post.title}`} />
+        <meta itemProp="description" content={"MySaves is a web application that allows visitors to submit YouTube videos, see all the submissions, and play the videos submitted by others in a beautiful UI."} />
+        <meta itemProp="og:description" content={"MySaves is a web application that allows visitors to submit YouTube videos, see all the submissions, and play the videos submitted by others in a beautiful UI."} />
         <meta itemProp="image" content={post.image} />
-        <meta itemProp="image" content={post.image} />
+        <meta itemProp="og:image" content={post.image} />
+        <meta itemProp="og:url" content={`${process.env.VERCEL_URL}/p/${post.id}`} />
         <link rel="canonical" href={`${process.env.VERCEL_URL}/p/${post.id}`} />
       </Head>
       <View post={post} />
