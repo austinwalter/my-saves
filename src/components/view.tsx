@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Post } from '../lib/types'
 import Sidebar from './sidebar'
+import BottomBar from './bottomBar'
 import useSWR from 'swr'
 
 type ViewProps = {
@@ -73,7 +74,15 @@ export default function View(props: ViewProps) {
           />
         </div>
       </div>
-      <div className="absolute block sm:hidden inset-x-0 bottom-0 h-16 p-6 bg-white border-t border-neutral-100"></div>
+      <div className="absolute block sm:hidden inset-x-0 bottom-0 h-16 p-2 bg-white border-t border-neutral-100">
+        <BottomBar
+          onClickUp={handleUp}
+          onClickDown={handleDown}
+          next={next}
+          prev={prev}
+          post={post}
+        />
+      </div>
     </>
   )
 }

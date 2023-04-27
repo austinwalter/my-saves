@@ -6,6 +6,7 @@ import { Post } from '../lib/types'
 import axios from 'axios'
 import { to } from '../lib/utils'
 import { ArrowPathIcon } from '@heroicons/react/20/solid'
+import { useRouter } from 'next/router'
 
 type ModalProps = {
   post?: Post;
@@ -19,12 +20,13 @@ type Inputs = {
 };
 
 export default function Modal(props: ModalProps) {
+  const router = useRouter()
   const { isOpen, onClose, post } = props
   const { register, handleSubmit, reset, setError, formState } = useForm<Inputs>()
   const { isSubmitting, errors } = formState
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const [response, error] = await to(axios.post('/api/posts', data))
+    const [resp, error] = await to(axios.post('/api/posts', data))
 
     if (error) {
       setError('root.serverError', {
@@ -33,6 +35,9 @@ export default function Modal(props: ModalProps) {
       })
     }
 
+    if (resp && resp.data && resp.data.post) {
+      router.push(`/p/${resp.data.post[0].id}`)
+    }
     reset()
     onClose()
   }

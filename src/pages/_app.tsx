@@ -6,7 +6,6 @@ import Header from '../components/header'
 import PostModal from '../components/postModal'
 import Modal from '../components/modal'
 import { Post } from '../lib/types'
-import Button from '../components/button'
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter()
