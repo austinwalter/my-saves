@@ -1,22 +1,55 @@
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import { Post } from '../lib/types'
 import Sidebar from './sidebar'
+import useSWR from 'swr'
 
 type ViewProps = {
   post: Post;
 };
 
-export default function View({ post }: ViewProps) {
-  const { short, youtube_id } = post
+const fetcher = (url: string, cursor: number) => (
+  fetch(`${url}?cursor=${cursor}&limit=1`)
+  .then(res => res.json())
+)
+
+export default function View(props: ViewProps) {
+  const router = useRouter()
+  const { pathname } = router
+  const [post, setPost] = useState(props.post)
+  const [next, setNext] = useState(props.post.id)
+  const [prev, setPrev] = useState(-props.post.id)
+  const [cursor, setCursor] = useState(props.post.id)
   const vertStyle = "max-w-[calc((100vh*9/16)-80px)]"
+  const { data, error, isLoading } = useSWR(['/api/posts', cursor], ([u, c]) => fetcher(u,c))
   
+  useEffect(() => {
+    if (data && data.prev !== prev) setPrev(data.prev)
+    if (data && data.next !== next) setNext(data.next)
+    if (data && data.posts && data.posts[0] !== post) {
+      setPost(data.posts[0])
+      router.push(pathname, `/p/${data.posts[0].id}`, { shallow: true })  
+    }
+  }, [data, prev, next, post, router, pathname]);
+
   const handleUp = () => {
-    console.log("up")
+    if (prev > 0) {
+      setCursor(prev)
+    } else {
+      setCursor(next)
+    }
   }
 
   const handleDown = () => {
-    console.log("down")
+    if (prev < 0) {
+      setCursor(prev)
+    } else {
+      setCursor(next)
+    }
   }
   
+  const { short, youtube_id } = post
+
   return (
     <>
       <div className={`flex-1 grid grid-cols-1 ${short ? "sm:content-center" : "content-center"} sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-2 py-6`}>
@@ -31,7 +64,13 @@ export default function View({ post }: ViewProps) {
           </div>
         </div>
         <div className="hidden sm:block">
-          <Sidebar onClickUp={handleUp} onClickDown={handleDown} />
+          <Sidebar
+            onClickUp={handleUp}
+            onClickDown={handleDown}
+            next={next}
+            prev={prev}
+            post={post}
+          />
         </div>
       </div>
       <div className="absolute block sm:hidden inset-x-0 bottom-0 h-16 p-6 bg-white border-t border-neutral-100"></div>
