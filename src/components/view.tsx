@@ -21,7 +21,7 @@ export default function View(props: ViewProps) {
   const [next, setNext] = useState(props.post.id)
   const [prev, setPrev] = useState(-props.post.id)
   const [cursor, setCursor] = useState(props.post.id)
-  const vertStyle = "max-w-[calc((100vh*9/16)-100px)]"
+  const vertStyle = "max-w-[calc((100vh*9/16)-120px)]"
   const { data, error, isLoading } = useSWR(['/api/posts', cursor], ([u, c]) => fetcher(u,c))
   
   useEffect(() => {
