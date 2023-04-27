@@ -2,7 +2,7 @@
 import supabase from '../../lib/dbClient'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import getCursorFeed from '../../lib/cursor'
-import { PostResponseData, PostListResponseData } from '../../lib/types'
+import { Post, PostResponseData, PostListResponseData } from '../../lib/types'
 import { to } from '../../lib/utils';
 import axios from 'axios'
 import * as cheerio from 'cheerio';
@@ -46,7 +46,7 @@ export default async function handler(
       const { data, error, status } = await supabase.from('posts').insert(attrs).select()
 
       if (error || status > 201) res.status(status)
-      res.status(status).json({ post: data })
+      res.status(status).json({ post: <Post>{...data} })
       break
     default:
       res.setHeader('Allow', ['GET', 'POST'])

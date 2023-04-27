@@ -19,5 +19,5 @@ export type PostListResponseData = {
 }
 
 export type PostResponseData = {
-  post?: Post[];
+  post?: Post;
 }
