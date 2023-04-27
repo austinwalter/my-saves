@@ -25,6 +25,8 @@ export default function Post({ post }: PostProps) {
         <meta property="og:description" content={"MySaves is a web application that allows visitors to submit YouTube videos, see all the submissions, and play the videos submitted by others in a beautiful UI."} />
         <meta property="og:image" content={post.image} />
 
+        <meta name="twitter:site" content="@awalterdev" />
+        <meta name="twitter:creator" content="@awalterdev" />
         <meta name="twitter:title" content={`MySaves | ${post.title}`} />
         <meta name="twitter:url" content={`${process.env.VERCEL_URL}/p/${post.id}`} />
         <meta name="twitter:image" content={post.image} />
