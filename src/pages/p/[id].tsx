@@ -1,3 +1,4 @@
+import Head from "next/head";
 import supabase from '../../lib/dbClient'
 import View from '../../components/view'
 import { Post } from '../../lib/types'
@@ -12,7 +13,16 @@ type PostProps = {
 
 export default function Post({ post }: PostProps) {
   return (
-    <View post={post} />
+    <>
+      <Head>
+        <title>{post.title} | MySaves</title>
+        <meta itemProp="name" content={post.title} />
+        <meta itemProp="image" content={post.image} />
+        <meta itemProp="image" content={post.image} />
+        <link rel="canonical" href={`${process.env.VERCEL_URL}/p/${post.id}`} />
+      </Head>
+      <View post={post} />
+    </>
   )
 }
 
@@ -23,7 +33,7 @@ type PostContext = {
 }
 
 export async function getServerSideProps({ params: { id } }: PostContext) {
-  
+
   const { data: post } = await supabase.from('posts')
     .select('*')
     .eq('id', id)
